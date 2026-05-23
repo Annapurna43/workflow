@@ -1,9 +1,7 @@
 package com.anna.orderinventory.workflow.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,13 +11,19 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping("/Orders")
+    @GetMapping("/Orders")
     public List<Order> getOrdersList(){
         return orderService.getOrdersList();
     }
 
-    @RequestMapping("/Orders/{orderId}")
+    @GetMapping("/Orders/{orderId}")
     public Order getOrderdetails(@PathVariable int orderId){
         return orderService.getOrderDetails(orderId);
+    }
+
+    @PostMapping("/Order")
+    public void createOrder(@RequestBody Order order){
+        orderService.createOrder(order);
+
     }
 }
