@@ -2,7 +2,9 @@ package com.anna.orderinventory.workflow.controller;
 
 import com.anna.orderinventory.workflow.entity.OrderEntity;
 import com.anna.orderinventory.workflow.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class OrderController {
 
     @PostMapping("/order")
     public void createOrder(@RequestBody OrderEntity order){
+        System.out.println("we are herre!");
         orderService.createOrder(order);
     }
     @PutMapping("/updateOrderStatus")
@@ -35,5 +38,12 @@ public class OrderController {
     @DeleteMapping("/deleteOrder/{orderId}")
     public void deleteOrder(@PathVariable int orderId){
         orderService.deleteOrder(orderId);
+    }
+
+    @GetMapping("/csrf")
+    public CsrfToken getCsrfToken(HttpServletRequest request){
+
+        return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+
     }
 }
